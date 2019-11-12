@@ -90,7 +90,7 @@ public class AddUpdateEnterprise extends AppCompatActivity {
           newEnterprise.setEmail(email.getText().toString());
           newEnterprise.setProductsAndServices(productsAndServices.getText().toString());
           enterpriseOperations.addEnterprise(newEnterprise);
-          text = "La empresa " + newEnterprise.getName() + "se ha agredado correctamente";
+          text = "La empresa " + newEnterprise.getName() + " se ha agredado correctamente";
         } else {
           oldEnterprise.setName(name.getText().toString());
           oldEnterprise.setUrl(url.getText().toString());
@@ -98,7 +98,7 @@ public class AddUpdateEnterprise extends AppCompatActivity {
           oldEnterprise.setEmail(email.getText().toString());
           oldEnterprise.setProductsAndServices(productsAndServices.getText().toString());
           enterpriseOperations.updateEnterprise(oldEnterprise);
-          text = "La empresa " + newEnterprise.getName() + "se ha actualizado correctamente";
+          text = "La empresa " + oldEnterprise.getName() + " se ha actualizado correctamente";
         }
         Toast toast = Toast.makeText(AddUpdateEnterprise.this, text, Toast.LENGTH_SHORT);
         toast.show();

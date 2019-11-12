@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
+    deleteEnterpriseButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        getEnterpriseIdAndRemoveEnterprise();
+      }
+    });
+
     viewAllEnterprisesButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -62,15 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+  }
 
-    FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
-      }
-    });
+  private void getEnterpriseIdAndRemoveEnterprise() {
+    LayoutInflater layoutInflater = LayoutInflater.from(this);
+    View getEnterpriseIdView = layoutInflater.inflate(R.layout.fragment_dialog_get_enterprise_id, null);
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setView(getEnterpriseIdView);
+
+    final EditText enterpriseIdEditText = (EditText) getEnterpriseIdView.findViewById(R.id.text_edit_enterprise_id);
+
+    builder
+        .setCancelable(true)
+        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int enterpriseId) {
+            enterpriseOperations = new EnterpriseOperations(MainActivity.this);
+            enterpriseOperations.removeEnterprise(enterpriseOperations.getEnterprise(Long.parseLong(enterpriseIdEditText.getText().toString())));
+            Toast toast = Toast.makeText(MainActivity.this, "Compañía borrada exitosamente", Toast.LENGTH_SHORT);
+            toast.show();
+          }
+        })
+        .create()
+        .show();
   }
 
   private void getEnterpriseIdAndUpdateEnterprise() {
@@ -82,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     final EditText enterpriseIdEditText = (EditText) getEnterpriseIdView.findViewById(R.id.text_edit_enterprise_id);
 
     builder
-        .setCancelable(false)
+        .setCancelable(true)
         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int enterpriseId) {

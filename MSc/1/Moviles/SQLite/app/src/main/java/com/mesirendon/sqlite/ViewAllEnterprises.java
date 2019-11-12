@@ -19,9 +19,7 @@ public class ViewAllEnterprises extends ListActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_all_enterprises);
     enterpriseOperations = new EnterpriseOperations(this);
-    enterpriseOperations.open();
     enterprises = enterpriseOperations.getAllEnterprises();
-    enterpriseOperations.close();
     ArrayAdapter<Enterprise> adapter = new ArrayAdapter<>(
         this,
         android.R.layout.simple_list_item_1,

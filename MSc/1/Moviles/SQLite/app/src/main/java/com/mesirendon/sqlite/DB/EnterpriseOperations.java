@@ -32,31 +32,23 @@ public class EnterpriseOperations {
     dbHandler = new EnterpriseDBHandler(context);
   }
 
-  public void open() {
-    Log.i(LOGTAG, "Database opened");
-    database = dbHandler.getWritableDatabase();
-  }
-
-  public void close() {
-    Log.i(LOGTAG, "Database closed");
-    dbHandler.close();
-  }
-
   public Enterprise addEnterprise(Enterprise enterprise) {
     ContentValues values = new ContentValues();
-    database = dbHandler.getWritableDatabase();
     values.put(EnterpriseDBHandler.COLUMN_NAME, enterprise.getName());
     values.put(EnterpriseDBHandler.COLUMN_URL, enterprise.getUrl());
     values.put(EnterpriseDBHandler.COLUMN_PHONE, enterprise.getPhone());
     values.put(EnterpriseDBHandler.COLUMN_EMAIL, enterprise.getEmail());
     values.put(EnterpriseDBHandler.COLUMN_PRODUCTS_AND_SERVICES, enterprise.getProductsAndServices());
     values.put(EnterpriseDBHandler.COLUMN_TYPE, enterprise.getType());
+    database = dbHandler.getWritableDatabase();
     long insertId = database.insert(EnterpriseDBHandler.TABLE_ENTERPRISES, null, values);
+    database.close();
     enterprise.setId(insertId);
     return enterprise;
   }
 
   public Enterprise getEnterprise(long id) {
+    database = dbHandler.getReadableDatabase();
     Cursor cursor = database.query(
         EnterpriseDBHandler.TABLE_ENTERPRISES,
         allColumns,
@@ -77,10 +69,12 @@ public class EnterpriseOperations {
         cursor.getString(5),
         cursor.getString(6)
     );
+    database.close();
     return enterprise;
   }
 
   public List<Enterprise> getAllEnterprises() {
+    database = dbHandler.getReadableDatabase();
     Cursor cursor = database.query(
         EnterpriseDBHandler.TABLE_ENTERPRISES,
         allColumns,
@@ -104,10 +98,11 @@ public class EnterpriseOperations {
         );
         enterprises.add(enterprise);
       }
+    database.close();
     return enterprises;
   }
 
-  public int updateEnterprise(Enterprise enterprise) {
+  public void updateEnterprise(Enterprise enterprise) {
     ContentValues values = new ContentValues();
     values.put(EnterpriseDBHandler.COLUMN_NAME, enterprise.getName());
     values.put(EnterpriseDBHandler.COLUMN_URL, enterprise.getUrl());
@@ -116,19 +111,23 @@ public class EnterpriseOperations {
     values.put(EnterpriseDBHandler.COLUMN_PRODUCTS_AND_SERVICES, enterprise.getProductsAndServices());
     values.put(EnterpriseDBHandler.COLUMN_TYPE, enterprise.getType());
 
-    return database.update(
+    database = dbHandler.getReadableDatabase();
+    database.update(
         EnterpriseDBHandler.TABLE_ENTERPRISES,
         values,
         EnterpriseDBHandler.COLUMN_ID + "=?",
         new String[]{String.valueOf(enterprise.getId())}
     );
+    database.close();
   }
 
   public void removeEnterprise(Enterprise enterprise) {
+    database = dbHandler.getWritableDatabase();
     database.delete(
         EnterpriseDBHandler.TABLE_ENTERPRISES,
         EnterpriseDBHandler.COLUMN_ID + "=" + enterprise.getId(),
         null
     );
+    database.close();
   }
 }
