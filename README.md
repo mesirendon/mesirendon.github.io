@@ -6,3 +6,6 @@ This is my page loader and University repos. Check a project on the following in
 1. Semester 1
   * Mobile Applications Development
     1. [Hello World](MSc/1/Moviles/01-HelloWorld)
+    2. [TicTacToe 1](MSc/1/Moviles/04-TicTacToe)
+    3. [TicTacToe 2](MSc/1/Moviles/05\ -\ TicTacToe)
+    4. [TicTacToe 3](MSc/1/Moviles/06\ -\ TicTacToe)

@@ -1,0 +1,15 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/new_game"
+        android:title="Nuevo juego"
+        android:icon="@drawable/new_game" />
+    <item android:id="@+id/ai_difficulty"
+        android:title="Dificultad"
+        android:icon="@drawable/difficulty_level"  />
+    <item
+        android:id="@+id/quit"
+        android:icon="@drawable/quit_game"
+        android:title="Salir" />
+    <item android:id="@+id/resetScores"
+        android:title="@string/resetScores" />
+</menu>
